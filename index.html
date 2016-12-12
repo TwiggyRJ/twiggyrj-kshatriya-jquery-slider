@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Kshatriya jQuery Slider</title>
+        <link href="https://kshatriya.co.uk/themes/kshatriya/assets/css/theme.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="dest/bundle.js" type="text/javascript"></script>
+        <style media="screen">
+            .full {
+                width: 100%;
+            }
+            .kshatriya-slider {
+                position: absolute;
+                overflow: hidden;
+                height: 550px;
+            }
+            .slider-track {
+                width: 100%;
+                height: 100%;
+                transition: transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+            }
+            .kshatriya-slider .kshatriya-slider-items {
+                position: relative;
+                float: left;
+                height:100%;
+                width:100%;
+            }
+            .relative {
+                position: relative;
+            }
+            .slide-left {
+                position: absolute;
+                left: 0px;
+                top: 50%;
+            }
+            .slide-right {
+                position: absolute;
+                right: 0px;
+                top: 50%;
+            }
+            .slider-button {
+                border-radius: 50px;
+                background-color: #333;
+                color: #fff;
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                cursor: pointer;
+                z-index: 1;
+            }
+            .hidden {
+                overflow: hidden;
+            }
+            .media-wrap {
+            	padding-bottom: 56.25%;
+            	overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="relative js-kshatriya-slider kshatriya-slider">
+            <div class="slider-track">
+                <div class="kshatriya-slider-items slide" style="background: url('https://kshatriya.co.uk/storage/app/media/placeholder.jpg') no-repeat 50% 50% / cover"></div>
+                <div class="kshatriya-slider-items slide" style="background: url('https://kshatriya.co.uk/storage/app/media/Windows_Insider_Anniversary-Ninjacat-3840x2160-4K.jpg') no-repeat 50% 50% / cover"></div>
+                <div class="kshatriya-slider-items slide" style="background: url('https://kshatriya.co.uk/storage/app/media/uss_resurrection_by_enterprisedavid-d4o6mvu.jpg') no-repeat 50% 50% / cover"></div>
+            </div>
+            <div class="slide-left slider-button js-slider-prev">
+                &#8592;
+            </div>
+            <div class="slide-right slider-button js-slider-next">
+                &#8594;
+            </div>
+        </div>
+    </body>
+</html>
