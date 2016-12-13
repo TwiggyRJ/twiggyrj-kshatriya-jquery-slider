@@ -100,8 +100,8 @@
 	        this.setSliderSpeed();
 	        this.setSlideIndexs();
 	        this.setSlideWidths();
-	        this.sliderControls(this);
-	        this.autoplaySlider(this);
+	        this.sliderControls();
+	        this.autoplaySlider();
 	    }
 
 	    //this is for setting the width of the slider to the width of all the items combined
@@ -146,12 +146,16 @@
 
 	    }, {
 	        key: 'sliderControls',
-	        value: function sliderControls(_this) {
+	        value: function sliderControls() {
+	            var _this = this;
+
+	            //Arrow functions bind context to the outserscope, so in this case, the class
 	            this.next.on('click', function (e) {
-	                _this.goTo(1, 1, -1, _this);
+	                _this.goTo(1, -1);
 	            });
+
 	            this.prev.on('click', function (e) {
-	                _this.goTo(1, -1, -1, _this);
+	                _this.goTo(-1, -1);
 	            });
 	        }
 
@@ -159,10 +163,12 @@
 
 	    }, {
 	        key: 'autoplaySlider',
-	        value: function autoplaySlider(_this) {
+	        value: function autoplaySlider() {
+	            var _this2 = this;
+
 	            if (this.autoplay == true) {
-	                setTimeout(function () {
-	                    _this.goTo(1, 1, 1, _this);
+	                this.autoPlayInterval = setTimeout(function () {
+	                    _this2.goTo(_this2.index + 1, 1);
 	                }, this.autoplaySpeed);
 	            }
 	        }
@@ -171,45 +177,37 @@
 
 	    }, {
 	        key: 'goTo',
-	        value: function goTo(index, direction, autoplay, _this) {
+	        value: function goTo(index, autoplay) {
 	            var offset = 0;
 
 	            if (this.autoplayCancel == true && autoplay == -1) {
 	                this.autoplay = false;
 	            }
 
-	            if (direction === 1) {
-	                //we set the next one to the first item of the slider if it is the last item
-	                index = this.index + index;
+	            //our new index is the current index +/- the index from the controls
+	            index = this.index + index;
 
-	                if (index > this.slideCount - 1) {
-	                    index = 0;
-	                }
+	            // we check if its the first or last item of the slider
 
-	                offset = index * 100 / this.slideCount;
-	                this.index = index;
-
-	                this.slidertrack.css({
-	                    transform: 'translate3d(-' + offset + '%, 0, 0)'
-	                });
-	            } else if (direction === -1) {
-	                //we set the next one to the last item of the slider if it is the first item
-
-	                if (this.index == 0) {
-	                    index = this.slideCount - 1;
-	                } else {
-	                    index = this.index - index;
-	                }
-	                offset = index * 100 / this.slideCount;
-	                this.index = index;
-
-	                this.slidertrack.css({
-	                    transform: 'translate3d(-' + offset + '%, 0, 0)'
-	                });
+	            //we set the next one to the first item of the slider if it is the last item
+	            if (index > this.slideCount - 1) {
+	                index = 0;
 	            }
 
+	            //we set the index to the last item if its the first item going back
+	            if (index < 0) {
+	                index = this.slideCount - 1;
+	            }
+
+	            offset = index * 100 / this.slideCount;
+	            this.index = index;
+
+	            this.slidertrack.css({
+	                transform: 'translate3d(-' + offset + '%, 0, 0)'
+	            });
+
 	            if (autoplay === 1 && this.autoplay == true) {
-	                _this.autoplaySlider(_this);
+	                this.autoplaySlider();
 	            }
 	        }
 	    }]);
