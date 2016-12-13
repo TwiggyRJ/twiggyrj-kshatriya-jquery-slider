@@ -1,15 +1,4 @@
-function init() {
-    let slider = new Slider({
-        el: $('.js-kshatriya-slider'),
-        sliderTrack: $('.slider-track'),
-        next: $('.js-slider-next'),
-        prev: $('.js-slider-prev'),
-        interval: 300
-    });
-}
-
-//Paul's take on making a slider, It's more OOP
-class Slider {
+export default class Slider {
     constructor(opts) {
         this.slider = opts.el;
         this.slidertrack = opts.sliderTrack;
@@ -22,9 +11,9 @@ class Slider {
         this.prev = opts.prev;
 
         this.setSliderWidth();
-        this.set_item_indexs();
-        this.set_item_widths();
-        this.sliderControls();
+        this.setSlideIndexs();
+        this.setSlideWidths();
+        this.sliderControls(this);
     }
 
     //this is for setting the width of the slider to the width of all the items combined
@@ -47,12 +36,12 @@ class Slider {
     }
 
     //set the item controls
-    sliderControls() {
+    sliderControls(_this) {
         this.next.on('click', function (e) {
-            slider.goTo(1, 1);
+            _this.goTo(1, 1);
         });
         this.prev.on('click', function (e) {
-            slider.goTo(1, -1);
+            _this.goTo(1, -1);
         });
     }
 
@@ -89,8 +78,4 @@ class Slider {
             });
         }
     }
-}
-
-module.exports = {
-    init
 }

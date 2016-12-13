@@ -1,5 +1,11 @@
-import sliders from './modules/kshatriya_slider';
+import Slider from './modules/kshatriya_slider';
 
 $( document ).ready(function() {
-    sliders.init();
+    let slider = new Slider({
+        el: $('.js-kshatriya-slider'),
+        sliderTrack: $('.slider-track'),
+        next: $('.js-slider-next'),
+        prev: $('.js-slider-prev'),
+        interval: 300
+    });
 });

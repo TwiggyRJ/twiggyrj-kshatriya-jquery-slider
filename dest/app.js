@@ -7,5 +7,11 @@ var _kshatriya_slider2 = _interopRequireDefault(_kshatriya_slider);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 $(document).ready(function () {
-    _kshatriya_slider2.default.init();
+    var slider = new _kshatriya_slider2.default({
+        el: $('.js-kshatriya-slider'),
+        sliderTrack: $('.slider-track'),
+        next: $('.js-slider-next'),
+        prev: $('.js-slider-prev'),
+        interval: 300
+    });
 });
