@@ -6,6 +6,9 @@ $( document ).ready(function() {
         sliderTrack: $('.slider-track'),
         next: $('.js-slider-next'),
         prev: $('.js-slider-prev'),
-        interval: 300
+        autoplay: true,
+        autoplayCancel: true,
+        autoplaySpeed: 3000,
+        speed: 750
     });
 });

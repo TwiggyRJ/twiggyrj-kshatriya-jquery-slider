@@ -16,16 +16,21 @@ var Slider = function () {
         this.slidertrack = opts.sliderTrack;
         this.slideEl = '.slide';
         this.slides = this.slider.find(this.slideEl);
-        this.interval = opts.interval;
+        this.autoplay = opts.autoplay | false;
+        this.autoplayCancel = opts.autoplayCancel | true;
+        this.autoplaySpeed = opts.autoplaySpeed | 3000;
+        this.speed = opts.speed | 350;
         this.slideCount = this.slides.length;
         this.index = 0;
         this.next = opts.next;
         this.prev = opts.prev;
 
         this.setSliderWidth();
+        this.setSliderSpeed();
         this.setSlideIndexs();
         this.setSlideWidths();
         this.sliderControls(this);
+        this.autoplaySlider(this);
     }
 
     //this is for setting the width of the slider to the width of all the items combined
@@ -36,6 +41,15 @@ var Slider = function () {
         value: function setSliderWidth() {
             var sliderWidth = this.slideCount * 100;
             this.slidertrack.css('width', sliderWidth + '%');
+        }
+
+        // we set the speed of the transitions on the slider items
+
+    }, {
+        key: 'setSliderSpeed',
+        value: function setSliderSpeed() {
+            var sliderSpeed = this.speed / 1000 % 60;
+            this.slidertrack.css('transition', 'transform ' + sliderSpeed + 's cubic-bezier(0.645, 0.045, 0.355, 1)');
         }
 
         //this is for diagnostic purposes only
@@ -63,16 +77,35 @@ var Slider = function () {
         key: 'sliderControls',
         value: function sliderControls(_this) {
             this.next.on('click', function (e) {
-                _this.goTo(1, 1);
+                _this.goTo(1, 1, -1, _this);
             });
             this.prev.on('click', function (e) {
-                _this.goTo(1, -1);
+                _this.goTo(1, -1, -1, _this);
             });
         }
+
+        //autoplay slider if autoplay == true
+
+    }, {
+        key: 'autoplaySlider',
+        value: function autoplaySlider(_this) {
+            if (this.autoplay == true) {
+                setTimeout(function () {
+                    _this.goTo(1, 1, 1, _this);
+                }, this.autoplaySpeed);
+            }
+        }
+
+        //This moves the slider track along to the correct place
+
     }, {
         key: 'goTo',
-        value: function goTo(index, direction) {
+        value: function goTo(index, direction, autoplay, _this) {
             var offset = 0;
+
+            if (this.autoplayCancel == true && autoplay == -1) {
+                this.autoplay = false;
+            }
 
             if (direction === 1) {
                 //we set the next one to the first item of the slider if it is the last item
@@ -90,7 +123,7 @@ var Slider = function () {
                 });
             } else if (direction === -1) {
                 //we set the next one to the last item of the slider if it is the first item
-                console.log(index);
+
                 if (this.index == 0) {
                     index = this.slideCount - 1;
                 } else {
@@ -102,6 +135,10 @@ var Slider = function () {
                 this.slidertrack.css({
                     transform: 'translate3d(-' + offset + '%, 0, 0)'
                 });
+            }
+
+            if (autoplay === 1 && this.autoplay == true) {
+                _this.autoplaySlider(_this);
             }
         }
     }]);
